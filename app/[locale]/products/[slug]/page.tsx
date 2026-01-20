@@ -15,6 +15,13 @@ import type { Variants } from "framer-motion";
 import { use } from "react";
 import { PRODUCTS } from "@/lib/products";
 
+const PLATFORM_META = {
+  windows: { label: "Windows", className: "bg-blue-500/15 text-blue-600 dark:text-blue-400" },
+  macos: { label: "macOS", className: "bg-neutral-500/15 text-neutral-700 dark:text-neutral-300" },
+  linux: { label: "Linux", className: "bg-orange-500/15 text-orange-600 dark:text-orange-400" },
+  android: { label: "Android", className: "bg-green-500/15 text-green-600 dark:text-green-400" },
+} as const;
+
 const container: Variants = {
   hidden: {},
   show: {
@@ -118,14 +125,18 @@ export default function ProductDetailPage({ params }: PageProps) {
           </a>
 
           <div className="flex flex-wrap gap-2">
-            {product.platforms.map((platform) => (
-              <span
-                key={platform}
-                className="rounded-full border border-neutral-300 px-3 py-1 text-xs text-neutral-600 dark:border-neutral-700 dark:text-neutral-300"
-              >
-                {t(`platforms.${platform}`)}
-              </span>
-            ))}
+            {product.platforms.map((platform) => {
+              const meta = PLATFORM_META[platform as keyof typeof PLATFORM_META];
+              if (!meta) return null;
+              return (
+                <span
+                  key={platform}
+                  className={`rounded-full px-3 py-1 text-xs font-medium ${meta.className}`}
+                >
+                  {meta.label}
+                </span>
+              );
+            })}
           </div>
         </motion.div>
       </motion.section>

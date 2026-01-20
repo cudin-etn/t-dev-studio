@@ -16,7 +16,7 @@ export const PRODUCTS = {
     accentColor: "#06b6d4",
     image: "/products/flashflow.png",
     platforms: ["windows", "macos", "linux"],
-    download: "#"
+    download: "https://github.com/cudin-etn/t-dev-studio/releases/download/flashflow/FlashFlow_Setup.exe"
   },
 
   fboard: {
@@ -36,7 +36,7 @@ export const PRODUCTS = {
     accentColor: "#a855f7",
     image: "/products/fboard.png",
     platforms: ["android"],
-    download: "#"
+    download: "https://github.com/cudin-etn/t-dev-studio/releases/download/Fboard/Fboard_v2.1.1.apk"
   },
 
   "macos-flasher": {
@@ -56,7 +56,7 @@ export const PRODUCTS = {
     accentColor: "#10b981",
     image: "/products/macos-flasher.png",
     platforms: ["macos"],
-    download: "#"
+    download: "https://github.com/cudin-etn/t-dev-studio/releases/download/macos-flasher-v1/MacOSFlasher.dmg"
   },
 
   ddrop: {

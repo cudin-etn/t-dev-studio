@@ -9,6 +9,7 @@ type ProductCardProps = {
   productKey: string;
   href: string;
   accent: "blue" | "purple" | "green" | "indigo";
+  platforms: readonly string[];
 };
 
 const ACCENT_STYLES = {
@@ -49,8 +50,12 @@ const cardVariants: Variants = {
   },
 };
 
-export default function ProductCard({ productKey, href, accent }: ProductCardProps) {
-  const t = useTranslations("products");
+export default function ProductCard({
+  productKey,
+  href,
+  accent,
+  platforms,
+}: ProductCardProps) {  const t = useTranslations("products");
   const locale = useLocale();
   const s = ACCENT_STYLES[accent];
 
@@ -84,6 +89,33 @@ export default function ProductCard({ productKey, href, accent }: ProductCardPro
         {/* CONTENT */}
         <div className="relative flex flex-col flex-1 transition-transform duration-300 group-hover:translate-y-[-2px]">
           <h3 className="text-lg font-semibold tracking-tight">{t(`${productKey}.name`)}</h3>
+          {platforms.length > 0 && (
+            <div className="mt-2 flex flex-wrap gap-1.5">
+              {platforms.map((platform) => {
+                const OS_STYLES: Record<string, string> = {
+                  windows:
+                    "bg-sky-100 text-sky-700 dark:bg-sky-500/20 dark:text-sky-300",
+                  macos:
+                    "bg-neutral-200 text-neutral-700 dark:bg-neutral-400/20 dark:text-neutral-200",
+                  linux:
+                    "bg-amber-100 text-amber-700 dark:bg-amber-500/20 dark:text-amber-300",
+                  android:
+                    "bg-green-100 text-green-700 dark:bg-green-500/20 dark:text-green-300",
+                };
+
+                return (
+                  <span
+                    key={platform}
+                    className={`rounded-md px-2 py-0.5 text-[11px] font-medium ${OS_STYLES[platform]}`}
+                  >
+                    {platform === "macos"
+                      ? "macOS"
+                      : platform.charAt(0).toUpperCase() + platform.slice(1)}
+                  </span>
+                );
+              })}
+            </div>
+          )}
           <p className="mt-2 min-h-[5.5rem] line-clamp-4 text-sm text-neutral-600 dark:text-neutral-300">
             {t(`${productKey}.description`)}
           </p>

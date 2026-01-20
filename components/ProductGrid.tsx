@@ -10,6 +10,8 @@ import fboardAnim from "@/public/lottie/fboard.json";
 import macosAnim from "@/public/lottie/macos.json";
 import ddropAnim from "@/public/lottie/ddrop.json";
 
+import { PRODUCTS as PRODUCT_DATA } from "@/lib/products";
+
 const PRODUCTS = [
   { key: "flashflow", href: "/products/flashflow", accent: "blue" as const },
   { key: "fboard", href: "/products/fboard", accent: "purple" as const },
@@ -68,6 +70,7 @@ export default function ProductGrid() {
               productKey={product.key}
               href={product.href}
               accent={product.accent}
+              platforms={PRODUCT_DATA[product.key as keyof typeof PRODUCT_DATA].platforms}
             />
           </div>
         ))}

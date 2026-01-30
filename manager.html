@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FlashFlow Manager</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body { background-color: #f0f2f5; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+        .container { max-width: 1200px; }
+        .card { border: none; box-shadow: 0 2px 10px rgba(0,0,0,0.05); border-radius: 12px; margin-bottom: 20px; }
+        .badge { font-weight: 500; padding: 6px 10px; }
+        .status-active { background-color: #d1e7dd; color: #0f5132; }
+        .status-expired { background-color: #f8d7da; color: #842029; }
+        .hwid-font { font-family: 'Consolas', monospace; font-size: 0.9rem; color: #444; }
+        /* Loading overlay */
+        #loading { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(255,255,255,0.8); z-index: 9999; display: none; justify-content: center; align-items: center; }
+    </style>
+</head>
+<body>
+
+<div class="container py-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h3 class="mb-0 text-primary"><i class="fas fa-rocket me-2"></i>FlashFlow Manager</h3>
+            <small class="text-muted">Hệ thống quản lý License & Renew</small>
+        </div>
+        <div>
+            <button class="btn btn-primary" onclick="fetchUsers()"><i class="fas fa-sync-alt me-1"></i> Refresh</button>
+        </div>
+    </div>
+
+    <div class="card" id="configCard">
+        <div class="card-body">
+            <div class="input-group">
+                <span class="input-group-text"><i class="fas fa-link"></i></span>
+                <input type="password" id="apiUrl" class="form-control" placeholder="Dán URL Web App Google Script vào đây...">
+                <button class="btn btn-dark" onclick="saveUrl()">Lưu Kết Nối</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <div class="col-md-6">
+            <div class="input-group">
+                <span class="input-group-text bg-white"><i class="fas fa-search text-muted"></i></span>
+                <input type="text" id="searchInput" class="form-control" placeholder="Tìm kiếm HWID..." onkeyup="filterTable()">
+            </div>
+        </div>
+        <div class="col-md-6 text-end">
+             <span class="badge bg-secondary" id="totalCount">0 Users</span>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0">
+                    <thead class="table-light">
+                        <tr>
+                            <th width="30%">HWID</th>
+                            <th width="15%">Gói Cước</th>
+                            <th width="20%">Ngày Đăng Ký</th>
+                            <th width="15%">Trạng Thái</th>
+                            <th width="20%" class="text-end">Hành Động</th>
+                        </tr>
+                    </thead>
+                    <tbody id="userTableBody">
+                        </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="renewModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Gia Hạn / Nâng Cấp</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <div class="mb-3">
+                    <label class="form-label text-muted small">Khách hàng (HWID)</label>
+                    <input type="text" class="form-control bg-light" id="modalHwid" readonly>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label fw-bold">Chọn gói mới:</label>
+                    <select id="packageType" class="form-select form-select-lg">
+                        <option value="PRO">🌟 PRO (1 Năm)</option>
+                        <option value="SHOP_SMALL">🏪 SHOP NHỎ (1 Năm)</option>
+                        <option value="SHOP_BIG">🏢 SHOP LỚN (1 Năm)</option>
+                        <option value="WHITE_LABEL">💎 WHITE LABEL (1 Năm)</option>
+                        <option value="ENTERPRISE">🚀 DOANH NGHIỆP (1 Năm)</option>
+                        <option value="PRO_6M">📅 PRO (6 Tháng)</option>
+                        <hr>
+                        <option value="TRIAL">🎁 Reset Dùng Thử (4 Ngày)</option>
+                        <option value="RE_4H">🚑 Gói Cứu Hộ (4 Giờ)</option>
+                    </select>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light" data-bs-dismiss="modal">Đóng</button>
+                <button type="button" class="btn btn-primary px-4" onclick="executeRenew()">Xác Nhận</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="loading">
+    <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;"></div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    document.getElementById('apiUrl').value = localStorage.getItem('ff_api_url') || '';
+    if(localStorage.getItem('ff_api_url')) fetchUsers();
+
+    function saveUrl() {
+        const url = document.getElementById('apiUrl').value.trim();
+        if(url) {
+            localStorage.setItem('ff_api_url', url);
+            fetchUsers();
+            document.getElementById('configCard').style.display = 'none';
+        } else {
+            alert('Vui lòng nhập URL!');
+        }
+    }
+
+    function showLoading(show) {
+        document.getElementById('loading').style.display = show ? 'flex' : 'none';
+    }
+
+    async function fetchUsers() {
+        const url = localStorage.getItem('ff_api_url');
+        if (!url) return;
+
+        showLoading(true);
+        try {
+            const response = await fetch(url + "?action=get_all_users");
+            const data = await response.json();
+            renderTable(data);
+            document.getElementById('totalCount').innerText = data.length + ' Users';
+        } catch (e) {
+            alert("Lỗi kết nối! Kiểm tra lại URL hoặc mở F12 xem lỗi.");
+            document.getElementById('configCard').style.display = 'block';
+        } finally {
+            showLoading(false);
+        }
+    }
+
+    function renderTable(users) {
+        const tbody = document.getElementById('userTableBody');
+        tbody.innerHTML = '';
+        users.reverse(); 
+
+        users.forEach(u => {
+            const isExpired = u.status === 'EXPIRED';
+            const statusHtml = isExpired 
+                ? '<span class="badge status-expired">HẾT HẠN</span>' 
+                : '<span class="badge status-active">HOẠT ĐỘNG</span>';
+
+            const row = `
+                <tr>
+                    <td><span class="hwid-font" title="${u.hwid}">${u.hwid.substring(0, 25)}...</span></td>
+                    <td><span class="fw-bold text-dark">${u.type}</span></td>
+                    <td class="small text-muted">${u.start_date.split(' ')[0]}</td>
+                    <td>${statusHtml}</td>
+                    <td class="text-end">
+                        <button class="btn btn-primary btn-sm" onclick="openRenewModal('${u.hwid}')">
+                            <i class="fas fa-wrench"></i> Gia Hạn
+                        </button>
+                    </td>
+                </tr>
+            `;
+            tbody.innerHTML += row;
+        });
+    }
+
+    function filterTable() {
+        const term = document.getElementById('searchInput').value.toLowerCase();
+        const rows = document.querySelectorAll('#userTableBody tr');
+        rows.forEach(row => {
+            const text = row.innerText.toLowerCase();
+            row.style.display = text.includes(term) ? '' : 'none';
+        });
+    }
+
+    const renewModal = new bootstrap.Modal(document.getElementById('renewModal'));
+    
+    function openRenewModal(hwid) {
+        document.getElementById('modalHwid').value = hwid;
+        renewModal.show();
+    }
+
+    async function executeRenew() {
+        const url = localStorage.getItem('ff_api_url');
+        const hwid = document.getElementById('modalHwid').value;
+        const type = document.getElementById('packageType').value;
+
+        renewModal.hide();
+        showLoading(true);
+
+        try {
+            const targetUrl = `${url}?action=renew_license&hwid=${encodeURIComponent(hwid)}&type=${encodeURIComponent(type)}`;
+            const response = await fetch(targetUrl);
+            const resData = await response.json();
+
+            if(resData.status === 'success') {
+                alert("✅ Đã gia hạn thành công!");
+                fetchUsers();
+            } else {
+                alert("❌ Lỗi: " + resData.msg);
+            }
+        } catch (e) {
+            alert("Lỗi mạng: " + e);
+        } finally {
+            showLoading(false);
+        }
+    }
+</script>
+
+</body>
+</html>

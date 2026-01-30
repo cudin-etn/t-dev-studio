@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FlashFlow Admin Panel</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body { background-color: #f8f9fa; }
+        .card { box-shadow: 0 4px 6px rgba(0,0,0,0.1); border: none; }
+        .status-expired { color: #dc3545; font-weight: bold; }
+        .status-active { color: #198754; font-weight: bold; }
+        .loading-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(255,255,255,0.8); z-index: 9999;
+            display: none; justify-content: center; align-items: center;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container py-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="text-primary"><i class="fas fa-bolt"></i> FlashFlow Manager</h2>
+        <button class="btn btn-success" onclick="fetchUsers()">
+            <i class="fas fa-sync-alt"></i> Làm mới
+        </button>
+    </div>
+
+    <div class="card mb-4">
+        <div class="card-body">
+            <label class="form-label fw-bold">🔗 Google Script URL (API):</label>
+            <div class="input-group">
+                <input type="text" id="apiUrl" class="form-control" placeholder="Dán link Web App Google Script vào đây...">
+                <button class="btn btn-primary" onclick="saveUrl()">Lưu Link</button>
+            </div>
+            <small class="text-muted">Link này được lưu trong trình duyệt của anh, không lộ ra ngoài.</small>
+        </div>
+    </div>
+
+    <div class="mb-3">
+        <input type="text" id="searchInput" class="form-control" placeholder="🔍 Tìm kiếm HWID..." onkeyup="filterTable()">
+    </div>
+
+    <div class="card">
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-hover table-striped align-middle mb-0">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>HWID</th>
+                            <th>Gói Hiện Tại</th>
+                            <th>Ngày Đăng Ký</th>
+                            <th>Ngày Hết Hạn (4H)</th>
+                            <th>Trạng Thái</th>
+                            <th>Hành Động</th>
+                        </tr>
+                    </thead>
+                    <tbody id="userTableBody">
+                        </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="renewModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Gia Hạn License</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" id="modalHwid">
+                <p>Đang gia hạn cho HWID: <strong id="modalHwidDisplay" class="text-primary"></strong></p>
+                <div class="mb-3">
+                    <label class="form-label">Chọn Gói Mới:</label>
+                    <select id="packageType" class="form-select">
+                        <option value="PRO">PRO (1 Năm)</option>
+                        <option value="SHOP_SMALL">SHOP NHỎ (1 Năm)</option>
+                        <option value="SHOP_BIG">SHOP LỚN (1 Năm)</option>
+                        <option value="WHITE_LABEL">WHITE LABEL (1 Năm)</option>
+                        <option value="ENTERPRISE">DOANH NGHIỆP (1 Năm)</option>
+                        <option value="PRO_6M">PRO (6 Tháng)</option>
+                        <option value="TRIAL">Reset TRIAL (4 Ngày)</option>
+                        <option value="RE_4H">Gói Cứu Hộ (4 Giờ)</option>
+                    </select>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                <button type="button" class="btn btn-primary" onclick="executeRenew()">Xác nhận Gia Hạn</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="loading-overlay" id="loading">
+    <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;"></div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    // Lấy URL từ bộ nhớ
+    document.getElementById('apiUrl').value = localStorage.getItem('ff_api_url') || '';
+
+    function saveUrl() {
+        const url = document.getElementById('apiUrl').value.trim();
+        if(url) {
+            localStorage.setItem('ff_api_url', url);
+            alert('Đã lưu URL!');
+            fetchUsers();
+        }
+    }
+
+    function showLoading(show) {
+        document.getElementById('loading').style.display = show ? 'flex' : 'none';
+    }
+
+    async function fetchUsers() {
+        const url = localStorage.getItem('ff_api_url');
+        if (!url) { alert("Vui lòng nhập Google Script URL trước!"); return; }
+
+        showLoading(true);
+        try {
+            // Gọi action get_all_users
+            const response = await fetch(url + "?action=get_all_users");
+            const data = await response.json();
+            renderTable(data);
+        } catch (e) {
+            alert("Lỗi tải dữ liệu: " + e);
+        } finally {
+            showLoading(false);
+        }
+    }
+
+    function renderTable(users) {
+        const tbody = document.getElementById('userTableBody');
+        tbody.innerHTML = '';
+        
+        users.forEach(u => {
+            const isExpired = u.status === 'EXPIRED';
+            const statusBadge = isExpired 
+                ? '<span class="badge bg-danger">HẾT HẠN</span>' 
+                : '<span class="badge bg-success">ACTIVE</span>';
+
+            const row = `
+                <tr>
+                    <td class="fw-bold" style="font-family: monospace;">${u.hwid}</td>
+                    <td><span class="badge bg-info text-dark">${u.type}</span></td>
+                    <td>${u.start_date}</td>
+                    <td>${u.expiry_date}</td>
+                    <td>${statusBadge}</td>
+                    <td>
+                        <button class="btn btn-sm btn-outline-primary" onclick="openRenewModal('${u.hwid}')">
+                            <i class="fas fa-edit"></i> Gia Hạn
+                        </button>
+                    </td>
+                </tr>
+            `;
+            tbody.innerHTML += row;
+        });
+    }
+
+    function filterTable() {
+        const term = document.getElementById('searchInput').value.toLowerCase();
+        const rows = document.querySelectorAll('#userTableBody tr');
+        rows.forEach(row => {
+            const text = row.innerText.toLowerCase();
+            row.style.display = text.includes(term) ? '' : 'none';
+        });
+    }
+
+    // Modal Logic
+    const renewModal = new bootstrap.Modal(document.getElementById('renewModal'));
+
+    function openRenewModal(hwid) {
+        document.getElementById('modalHwid').value = hwid;
+        document.getElementById('modalHwidDisplay').innerText = hwid;
+        renewModal.show();
+    }
+
+    async function executeRenew() {
+        const url = localStorage.getItem('ff_api_url');
+        const hwid = document.getElementById('modalHwid').value;
+        const type = document.getElementById('packageType').value;
+
+        if(!confirm(`Chắc chắn gia hạn gói ${type} cho ${hwid}?`)) return;
+
+        renewModal.hide();
+        showLoading(true);
+
+        try {
+            // Gọi action renew_license
+            const targetUrl = `${url}?action=renew_license&hwid=${encodeURIComponent(hwid)}&type=${encodeURIComponent(type)}`;
+            
+            // Dùng fetch với mode no-cors nếu cần, hoặc follow redirect
+            // Lưu ý: Apps Script trả về JSON nên ta dùng fetch thường
+            const response = await fetch(targetUrl);
+            const resData = await response.json();
+
+            if(resData.status === 'success') {
+                alert("✅ " + resData.data);
+                fetchUsers(); // Load lại bảng
+            } else {
+                alert("❌ Lỗi: " + resData.msg);
+            }
+        } catch (e) {
+            alert("Lỗi kết nối: " + e);
+        } finally {
+            showLoading(false);
+        }
+    }
+    
+    // Auto load nếu đã có link
+    if(localStorage.getItem('ff_api_url')) {
+        fetchUsers();
+    }
+</script>
+
+</body>
+</html>

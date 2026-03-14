@@ -3,17 +3,57 @@
     "slogan": "Software, Done Right — For Every Platform"
   },
   "hero": {
-    "title": "T-Dev Studio",
-    "description": "Building cross-platform applications and tools with a strong focus on aesthetics, performance, and user experience.",
-    "cta": "Explore products"
+    "badge": "Available for Freelance",
+    "title1": "Software,",
+    "title2": "Done Right.",
+    "description": "I am a Developer passionate about creating lean, high-performance tools and applications. Specializing in Website design, Desktop, and Mobile Apps.",
+    "hireMe": "Hire Me",
+    "cta": "Explore products",
+    "services": {
+      "desktop": {
+        "title": "Desktop Apps",
+        "desc": "macOS, Windows, Linux Tools"
+      },
+      "mobile": {
+        "title": "Mobile Apps",
+        "desc": "Native & Cross-platform Android"
+      },
+      "web": {
+        "title": "Web Development",
+        "desc": "Modern, Fast, Responsive Sites"
+      }
+    }
   },
   "about": {
-    "title": "About",
-    "description": "T-Dev Studio builds thoughtfully designed software across multiple platforms. Each product emphasizes clarity, performance, and long-term usability — crafted to feel simple, reliable, and intentional.",
-    "principles": {
-      "quality": "Quality is placed at the core of every design and development decision.",
-      "design": "Clear, minimal design with a strong focus on user experience.",
-      "platform": "Cross-platform products built with consistent behavior and feel."
+    "title": "Expertise & Philosophy",
+    "philosophy": {
+      "title": "Development Philosophy",
+      "desc": "Every line of code matters. I don't just write software that works; I build systems that are optimized, stable, and aesthetically pleasing. Whether it's a macOS system tool or a demanding Android app, simplicity and user experience are always the guiding principles."
+    },
+    "edge": {
+      "title": "The Competitive Edge",
+      "desc": "Mastering System-level, Native Apps, and Web Frontend. Instead of using patchwork solutions, I focus on solid architecture, latency optimization, and strict adherence to the UI/UX standards of each OS (Apple Human Interface & Google Material)."
+    },
+    "stack": {
+      "title": "Tech Stack",
+      "desc": "Utilizing modern and Native technologies to ensure maximum performance across platforms."
+    }
+  },
+  "products": {
+    "title": "Products",
+    "actions": {
+      "viewDetails": "View details",
+      "download": "Download",
+      "github": "GitHub",
+      "docs": "Documentation"
+    },
+    "cta": {
+      "download": "Download",
+      "ready": "Ready to get started?",
+      "description": "Download and start using this product today. Built to be fast, reliable, and thoughtfully designed.",
+      "platforms": "Available for multiple platforms",
+      "support": "Support this project",
+      "supportHint": "If you find this product useful, you can support its development to help keep it free and well-maintained."
     }
   },
   "donate": {
@@ -33,93 +73,10 @@
       "note": "Note: Donate T-Dev Studio"
     }
   },
-  "products": {
-    "title": "Products",
-    "actions": {
-      "viewDetails": "View details",
-      "download": "Download",
-      "github": "GitHub",
-      "docs": "Documentation"
-    },
-    "cta": {
-      "download": "Download",
-      "ready": "Ready to get started?",
-      "description": "Download and start using this product today. Built to be fast, reliable, and thoughtfully designed.",
-      "platforms": "Available for multiple platforms",
-      "support": "Support this project",
-      "supportHint": "If you find this product useful, you can support its development to help keep it free and well-maintained."
-    },
-    "platforms": {
-      "windows": "Windows",
-      "macos": "macOS",
-      "linux": "Linux",
-      "android": "Android"
-    },
-    "features": {
-      "fast": "High performance and low latency",
-      "simple": "Clean, focused, and distraction-free",
-      "safe": "Stable, secure, and reliable",
-      "oneplus": "Full support for OnePlus devices",
-      "pixel": "Compatible with Google Pixel devices",
-      "xiaomi": "Support for Xiaomi devices",
-      "macOptimized": "Optimized specifically for macOS workflows",
-      "crossPlatform": "Runs seamlessly on Windows, macOS, and Linux",
-      "ultraFast": "Ultra-fast response with near-zero latency",
-      "minimal": "Minimal design focused on core functionality",
-      "privacy": "No tracking, no data collection, privacy-first by design",
-      "wireless": "Fast and stable wireless connectivity",
-      "powerful": "Powerful features designed for advanced users"
-    },
-    "flashflow": {
-      "name": "FlashFlow",
-      "description": "A powerful cross-platform Android flashing tool supporting Pixel, OnePlus, and Xiaomi devices on Windows, macOS, and Linux.",
-      "features": [
-        "Unlock and relock bootloader",
-        "Flash stock ROM, OTA, AOSP, and super.img",
-        "Install custom recovery such as TWRP and OrangeFox",
-        "Optimized for speed and multi-device workflows"
-      ]
-    },
-    "fboard": {
-      "name": "FBoard",
-      "description": "A modern Android keyboard focused on speed, minimalism, and ultra-low latency typing.",
-      "features": [
-        "Ultra-low input latency",
-        "Clean and modern UI design",
-        "No unnecessary features or bloat",
-        "Optimized for fast and accurate typing"
-      ]
-    },
-    "macosFlasher": {
-      "name": "macOS Flasher",
-      "description": "An optimized ROM flashing tool built specifically for macOS.",
-      "features": [
-        "Purpose-built for macOS",
-        "Clean and easy-to-understand interface",
-        "Stable on Apple Silicon devices",
-        "Integrated and safe flashing workflow"
-      ]
-    },
-    "macos-flasher": {
-      "name": "macOS Flasher",
-      "description": "A macOS-focused flashing tool for OnePlus devices with full ROM and system-level support.",
-      "features": [
-        "Designed specifically for macOS",
-        "Flash Full OTA, AOSP, and super images",
-        "Debloat and modify system safely",
-        "Bootloader lock and unlock support"
-      ]
-    },
-    "ddrop": {
-      "name": "Ddrop",
-      "description": "A fast and intuitive AirDrop-like experience for transferring files between Android and macOS.",
-      "features": [
-        "Fast wireless file transfer",
-        "Seamless Android to macOS connection",
-        "Simple, visual-driven interface",
-        "No cables or complex setup required"
-      ]
-    }
+  "nav": {
+    "home": "Overview",
+    "about": "Skills",
+    "contact": "Contact"
   },
   "footer": {
     "support": "Support the studio",

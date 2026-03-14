@@ -2,18 +2,41 @@
   "header": {
     "slogan": "Software, Done Right — For Every Platform"
   },
-  "hero": {
-    "title": "T-Dev Studio",
-    "description": "Xây dựng các ứng dụng và công cụ đa nền tảng, tập trung vào thẩm mỹ, hiệu năng và trải nghiệm người dùng.",
-    "cta": "Khám phá sản phẩm"
+ "hero": {
+    "badge": "Sẵn sàng nhận dự án (Freelance)",
+    "title1": "Software,",
+    "title2": "Done Right.",
+    "description": "Tôi là một Developer đam mê tạo ra các công cụ và ứng dụng tinh gọn, hiệu năng cao. Chuyên thiết kế Website, build Tool và App đa nền tảng.",
+    "hireMe": "Liên hệ ngay",
+    "cta": "Khám phá sản phẩm",
+    "services": {
+      "desktop": {
+        "title": "Ứng dụng Desktop",
+        "desc": "Công cụ cho macOS, Windows, Linux"
+      },
+      "mobile": {
+        "title": "Ứng dụng Mobile",
+        "desc": "Android Native & Đa nền tảng"
+      },
+      "web": {
+        "title": "Phát triển Web",
+        "desc": "Website hiện đại, tối ưu tốc độ"
+      }
+    }
   },
   "about": {
-    "title": "Giới thiệu",
-    "description": "T-Dev Studio xây dựng phần mềm được thiết kế cẩn trọng trên nhiều nền tảng. Mỗi sản phẩm tập trung vào sự rõ ràng, hiệu năng và khả năng sử dụng lâu dài — đơn giản, đáng tin cậy và có chủ đích.",
-    "principles": {
-      "quality": "Chất lượng được đặt lên hàng đầu trong mọi quyết định thiết kế và phát triển.",
-      "design": "Thiết kế rõ ràng, tinh gọn và tập trung vào trải nghiệm người dùng.",
-      "platform": "Xây dựng sản phẩm đa nền tảng với hành vi và cảm giác sử dụng nhất quán."
+    "title": "Chuyên môn & Triết lý",
+    "philosophy": {
+      "title": "Triết lý phát triển",
+      "desc": "Mọi dòng code đều có giá trị. Tôi không chỉ viết phần mềm để chạy được, tôi xây dựng những hệ thống tối ưu, ổn định và có tính thẩm mỹ cao. Dù là một tool hệ thống trên macOS hay một ứng dụng Android đòi hỏi hiệu năng khắt khe, sự đơn giản và trải nghiệm người dùng luôn là kim chỉ nam."
+    },
+    "edge": {
+      "title": "Lợi thế cạnh tranh",
+      "desc": "Làm chủ cả System-level, App Native lẫn Web Frontend. Thay vì sử dụng các giải pháp chắp vá, tôi tập trung vào kiến trúc vững chắc, tối ưu độ trễ và áp dụng chuẩn mực UI/UX khắt khe của từng hệ điều hành (Apple Human Interface & Google Material)."
+    },
+    "stack": {
+      "title": "Công nghệ & Công cụ",
+      "desc": "Sử dụng các công nghệ hiện đại và Native để đảm bảo hiệu năng tối đa trên từng nền tảng."
     }
   },
   "products": {
@@ -31,84 +54,6 @@
       "platforms": "Hỗ trợ đa nền tảng",
       "support": "Ủng hộ dự án",
       "supportHint": "Nếu sản phẩm hữu ích, bạn có thể ủng hộ để T-Dev Studio tiếp tục duy trì và phát triển."
-    },
-    "platforms": {
-      "windows": "Windows",
-      "macos": "macOS",
-      "linux": "Linux",
-      "android": "Android"
-    },
-    "features": {
-      "fast": "Nhanh & ổn định",
-      "simple": "Đơn giản, dễ dùng",
-      "safe": "An toàn cho thiết bị",
-      "oneplus": "Hỗ trợ chuyên sâu thiết bị OnePlus",
-      "pixel": "Hỗ trợ thiết bị Google Pixel",
-      "xiaomi": "Hỗ trợ thiết bị Xiaomi",
-      "bootloader": "Mở khóa & khóa lại bootloader an toàn",
-      "ota": "Hỗ trợ flash ROM OTA, Full OTA",
-      "super": "Flash ROM Super.img & AOSP",
-      "recovery": "Cài recovery tùy chỉnh (TWRP, OrangeFox)",
-      "crossPlatform": "Hoạt động trên Windows, macOS và Linux",
-      "macOptimized": "Tối ưu chuyên sâu cho macOS",
-      "debloat": "Debloat hệ thống gọn nhẹ, an toàn",
-      "airdropLike": "Truyền file nhanh tương tự AirDrop",
-      "lowLatency": "Độ trễ cực thấp, phản hồi tức thì khi gõ",
-      "ultraFast": "Siêu nhanh, độ trễ gần như bằng 0",
-      "minimal": "Thiết kế tối giản, tập trung vào cốt lõi",
-      "privacy": "Không thu thập dữ liệu, tôn trọng quyền riêng tư",
-      "powerful": "Mạnh mẽ, xử lý tác vụ phức tạp",
-      "wireless": "Kết nối không dây nhanh và ổn định"
-    },
-    "flashflow": {
-      "name": "FlashFlow",
-      "description": "Công cụ flash ROM đa nền tảng cho Windows, macOS và Linux.",
-      "features": [
-        "Hỗ trợ Windows, macOS và Linux",
-        "Quy trình flash đơn giản, dễ sử dụng",
-        "Tự động nhận thiết bị và driver",
-        "Tối ưu cho tốc độ và độ ổn định"
-      ]
-    },
-    "fboard": {
-      "name": "FBoard",
-      "description": "Bàn phím tuỳ biến dành cho Android.",
-      "features": [
-        "Tuỳ biến layout bàn phím linh hoạt",
-        "Hỗ trợ nhiều ngôn ngữ và theme",
-        "Nhẹ, mượt và tiết kiệm pin",
-        "Thiết kế tập trung vào trải nghiệm gõ"
-      ]
-    },
-    "macosFlasher": {
-      "name": "macOS Flasher",
-      "description": "Công cụ flash ROM tối ưu cho macOS.",
-      "features": [
-        "Tối ưu riêng cho macOS",
-        "Giao diện gọn gàng, dễ hiểu",
-        "Hoạt động ổn định trên Apple Silicon",
-        "Tích hợp quy trình flash an toàn"
-      ]
-    },
-    "macos-flasher": {
-      "name": "macOS Flasher",
-      "description": "Công cụ flash ROM tối ưu cho macOS.",
-      "features": [
-        "Tối ưu riêng cho macOS",
-        "Giao diện gọn gàng, dễ hiểu",
-        "Hoạt động ổn định trên Apple Silicon",
-        "Tích hợp quy trình flash an toàn"
-      ]
-    },
-    "ddrop": {
-      "name": "Ddrop",
-      "description": "Truyền file nhanh giữa Android và macOS.",
-      "features": [
-        "Truyền file không dây tốc độ cao",
-        "Kết nối nhanh giữa Android và macOS",
-        "Không cần cáp, không cần cấu hình phức tạp",
-        "Tập trung vào sự đơn giản và tiện lợi"
-      ]
     }
   },
   "donate": {
@@ -127,6 +72,11 @@
       "account": "STK: 7901 88888 1988 – Hà Quang Tùng",
       "note": "Nội dung: Donate T-Dev Studio"
     }
+  },
+ "nav": {
+    "home": "Tổng quan",
+    "about": "Kỹ năng",
+    "contact": "Liên hệ"
   },
   "footer": {
     "support": "Ủng hộ dự án",

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>FlashFlow - Xác thực Telegram</title>
+    <style>
+        body { background-color: #0B0F19; color: white; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; font-family: sans-serif; }
+        .box { background: #131824; padding: 40px; border-radius: 20px; border: 1px solid #1e293b; text-align: center; box-shadow: 0 20px 40px rgba(0,0,0,0.5); }
+    </style>
+</head>
+<body>
+    <div class="box">
+        <h2 style="margin-top: 0;">Đăng nhập Bảng Vàng FlashFlow</h2>
+        <p style="color: #94a3b8; margin-bottom: 30px;">Nhấp vào nút bên dưới để cấp quyền kết nối</p>
+        
+        <!-- Script của Telegram, sẽ hiện nút xanh ngay lập tức vì chạy trên domain xịn -->
+        <script async src="https://telegram.org/js/telegram-widget.js?22" 
+                data-telegram-login="flashflow_auth_bot" 
+                data-size="large" 
+                data-onauth="onTelegramAuth(user)" 
+                data-request-access="write"></script>
+    </div>
+    
+    <script>
+        function onTelegramAuth(user) {
+            // Đăng nhập xong, biến data thành chuỗi URL và ném về lại App Desktop
+            const params = new URLSearchParams(user).toString();
+            window.location.href = "http://127.0.0.1:8123/callback?" + params;
+        }
+    </script>
+</body>
+</html>

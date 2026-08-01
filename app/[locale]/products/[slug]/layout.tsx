@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
-import { PRODUCTS } from "@/lib/products";
+import { getProductBySlug } from "@/lib/products";
+import { getSiteUrl, isLocale, SITE_NAME } from "@/lib/site";
 
 type Props = {
   params: Promise<{ locale: string; slug: string }>;
@@ -10,22 +11,22 @@ export async function generateMetadata(
   { params }: Props
 ): Promise<Metadata> {
   const { slug, locale } = await params;
-  const product = PRODUCTS[slug as keyof typeof PRODUCTS];
+  if (!isLocale(locale)) return {};
+
+  const product = await getProductBySlug(slug, locale);
 
   if (!product) {
     return {};
   }
 
-  const title = `${product.name} — T-Dev Studio`;
-
-  const description =
-    product.description[locale as "vi" | "en"] ??
-    "A cross-platform tool built by T-Dev Studio.";
+  const title = product.seoTitle && product.seoTitle !== product.name ? product.seoTitle : `${product.name} — T-Dev Studio`;
+  const description = product.seoDescription || product.description;
+  const ogImage = product.seo.ogImage || (product.assets.og && product.assets.og !== "/og.png" ? product.assets.og : "/og-banner.jpg");
 
   return {
     title,
     description,
-    metadataBase: new URL("https://t-dev.studio"),
+    metadataBase: new URL(getSiteUrl()),
     alternates: {
       canonical: `/${locale}/products/${slug}`,
       languages: {
@@ -35,13 +36,14 @@ export async function generateMetadata(
     },
     openGraph: {
       type: "website",
-      locale: locale,
-      siteName: "T-Dev Studio",
+      locale: locale === "vi" ? "vi_VN" : "en_US",
+      url: `${getSiteUrl()}/${locale}/products/${slug}`,
+      siteName: SITE_NAME,
       title,
       description,
       images: [
         {
-          url: product.image,
+          url: ogImage,
           width: 1200,
           height: 630,
           alt: product.name
@@ -52,7 +54,7 @@ export async function generateMetadata(
       card: "summary_large_image",
       title,
       description,
-      images: [product.image]
+      images: [ogImage]
     }
   };
 }

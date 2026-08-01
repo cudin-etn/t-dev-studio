@@ -1,129 +1,201 @@
-"use client";
-
-import { motion } from "framer-motion";
-import Link from "next/link";
 import Image from "next/image";
-import { useTranslations, useLocale } from "next-intl";
-import { PRODUCTS } from "@/lib/products";
-import { Mail, Code2, Cpu, Globe, Zap, Coffee, Github } from "lucide-react";
+import Link from "next/link";
+import { ArrowRight, ArrowUpRight, Download, Mail } from "lucide-react";
+import Reveal from "@/components/Reveal";
+import { CONTACT_EMAIL, type Locale } from "@/lib/site";
+import { PLATFORM_META, type LocalizedProduct, type ReleaseAsset } from "@/lib/products/types";
 
-export default function DashboardGrid() {
-  const tHero = useTranslations("hero");
-  const tAbout = useTranslations("about");
-  const tProducts = useTranslations("products");
-  const locale = useLocale() as "vi" | "en";
-  const productList = Object.values(PRODUCTS);
+type Props = {
+  products: LocalizedProduct[];
+  locale: Locale;
+};
+
+const copy = {
+  vi: {
+    eyebrow: "T-Dev Studio · Freelance product engineer",
+    title: "Biến những bài toán kỹ thuật khó thành sản phẩm dễ dùng.",
+    lead: "Tôi thiết kế và phát triển app native, tool hệ thống và sản phẩm đa nền tảng — từ kiến trúc, hiệu năng đến trải nghiệm cuối cùng.",
+    contact: "Bắt đầu một dự án",
+    github: "Xem case study",
+    work: "Selected case studies",
+    workLead: "Hai sản phẩm tâm huyết, nơi kỹ thuật nền tảng và trải nghiệm người dùng phải cùng đạt tiêu chuẩn cao.",
+    detail: "Xem case study",
+    catalogDetail: "Khám phá sản phẩm",
+    download: "Tải về",
+    downloads: "lượt tải",
+    more: "Thêm sản phẩm",
+    moreLead: "Những công cụ nhỏ hơn, cùng một tiêu chuẩn hoàn thiện.",
+    catalog: "Xem toàn bộ sản phẩm",
+    soon: "Đang hoàn thiện",
+  },
+  en: {
+    eyebrow: "T-Dev Studio · Freelance product engineer",
+    title: "Turning difficult technical problems into products people can use.",
+    lead: "I design and build native apps, system tools, and cross-platform products — from architecture and performance to the final user experience.",
+    contact: "Start a project",
+    github: "View case studies",
+    work: "Selected case studies",
+    workLead: "Two products I care deeply about, where systems engineering and product UX had to meet the same high standard.",
+    detail: "View case study",
+    catalogDetail: "Explore product",
+    download: "Download",
+    downloads: "downloads",
+    more: "More products",
+    moreLead: "Smaller tools, held to the same standard of finish.",
+    catalog: "View all products",
+    soon: "In progress",
+  },
+} as const;
+
+export default function DashboardGrid({ products, locale }: Props) {
+  const t = copy[locale];
+  const featured = products.filter((product) => product.featured).slice(0, 2);
+  const remaining = products.filter((product) => !featured.some((item) => item.slug === product.slug));
 
   return (
-    <div className="mx-auto flex w-full max-w-7xl flex-col gap-6 px-4 pt-24 pb-12 md:px-6">
-      
-      {/* ================= HÀNG 1: BANNER & TECH STACK ================= */}
-      <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
-        
-        {/* HERO BANNER (Spans 2 Cột) */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="rounded-3xl bg-gradient-to-br from-sky-400 via-indigo-400 to-purple-400 p-[1px] shadow-lg md:col-span-2 dark:from-sky-500/40 dark:via-indigo-500/40 dark:to-purple-500/40">
-          <div className="relative flex h-full w-full flex-col justify-center overflow-hidden rounded-[calc(1.5rem-1px)] bg-indigo-200 p-8 dark:bg-neutral-900/80 lg:p-12">
-            <div className="relative z-10 mb-6 inline-flex w-fit items-center gap-2 rounded-full border border-indigo-500/30 bg-white/60 px-3 py-1.5 text-xs font-medium text-indigo-800 dark:bg-black/40 dark:text-indigo-300">
-              <span className="relative flex h-2 w-2">
-                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-indigo-400 opacity-75"></span>
-                <span className="relative inline-flex h-2 w-2 rounded-full bg-indigo-500"></span>
-              </span>
-              {tHero("badge")}
-            </div>
-            
-            <h1 className="relative z-10 text-4xl font-bold tracking-tight text-neutral-900 md:text-5xl dark:text-white">
-              {tHero("title1")} <span className="animate-[gradient_8s_linear_infinite] bg-gradient-to-r from-indigo-600 via-cyan-500 to-purple-500 bg-[length:200%_200%] bg-clip-text text-transparent">{tHero("title2")}</span>
-            </h1>
-            
-            <p className="relative z-10 mt-6 max-w-lg text-sm leading-relaxed text-indigo-950/80 dark:text-neutral-300">
-              {tHero("description")}
-            </p>
-            
-            <div className="relative z-10 mt-10">
-              <a href="mailto:tungninh88@gmail.com" className="group/btn relative inline-block overflow-hidden rounded-full p-[2px]">
-                <span className="absolute inset-0 bg-gradient-to-r from-indigo-500 via-purple-500 to-cyan-500 opacity-80 blur-sm group-hover/btn:opacity-100" />
-                <span className="absolute inset-0 bg-gradient-to-r from-indigo-500 via-purple-500 to-cyan-500" />
-                <div className="relative flex items-center gap-2 rounded-full bg-white px-7 py-3 text-sm font-semibold text-neutral-900 transition-colors group-hover/btn:bg-transparent group-hover/btn:text-white dark:bg-neutral-950 dark:text-white">
-                  <Mail className="h-4 w-4 transition-transform group-hover/btn:-translate-y-1" />
-                  <span>{tHero("hireMe")}</span>
-                </div>
-              </a>
-            </div>
+    <div id="home" className="overflow-hidden">
+      <section className="relative mx-auto grid min-h-[92svh] max-w-[1440px] items-center gap-14 px-5 pb-20 pt-32 md:px-10 lg:grid-cols-[0.86fr_1.14fr] lg:px-14 lg:pt-36">
+        <div className="relative z-10 hero-enter">
+          <p className="text-xs font-bold uppercase tracking-[0.22em] text-amber-800">{t.eyebrow}</p>
+          <h1 className="mt-7 max-w-3xl text-balance text-[2.1rem] font-medium leading-[1.12] tracking-[-0.03em] text-stone-950 sm:text-5xl lg:text-[2.9rem] xl:text-[3.25rem]">
+            {t.title}
+          </h1>
+          <p className="mt-7 max-w-xl text-pretty text-base leading-7 text-stone-600 md:text-lg md:leading-8">{t.lead}</p>
+          <div className="mt-9 flex flex-wrap gap-3">
+            <a href={`mailto:${CONTACT_EMAIL}`} className="group inline-flex items-center gap-2 rounded-full bg-[#665745] px-5 py-3 text-sm font-semibold text-white transition duration-300 hover:-translate-y-0.5 hover:bg-[#8a6f4d] focus:outline-none focus:ring-2 focus:ring-amber-700 focus:ring-offset-2">
+              <Mail className="h-4 w-4" /> {t.contact}
+              <ArrowUpRight className="h-4 w-4 transition group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+            </a>
+            <Link href={`/${locale}/work`} className="inline-flex items-center gap-2 rounded-full border border-stone-300 bg-white/80 px-5 py-3 text-sm font-semibold text-stone-800 transition duration-300 hover:-translate-y-0.5 hover:border-stone-950 hover:bg-white focus:outline-none focus:ring-2 focus:ring-amber-700 focus:ring-offset-2">
+              <ArrowRight className="h-4 w-4" /> {t.github}
+            </Link>
           </div>
-        </motion.div>
+        </div>
 
-        {/* TECH STACK (Spans 1 Cột) */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.1 }}
-          className="rounded-3xl bg-gradient-to-br from-cyan-400 via-blue-400 to-purple-400 p-[1px] shadow-lg dark:from-cyan-500/40 dark:via-blue-500/40 dark:to-purple-500/40"
-        >
-          <div className="flex h-full w-full flex-col justify-between overflow-hidden rounded-[calc(1.5rem-1px)] bg-blue-200 p-8 dark:bg-neutral-900/80">
-            <div>
-              <Cpu className="mb-4 h-8 w-8 text-blue-700 dark:text-cyan-400" />
-              <h3 className="mb-3 text-xl font-bold tracking-tight text-neutral-950 dark:text-white">{tAbout("stack.title")}</h3>
-              <p className="text-xs leading-relaxed text-blue-950/80 dark:text-neutral-400">{tAbout("stack.desc")}</p>
-            </div>
-            
-            <div className="mt-8 grid grid-cols-2 gap-3">
-              {[ {icon: <Code2 />, name: "Swift", color: "text-blue-600"}, {icon: <Zap />, name: "Kotlin", color: "text-orange-600"}, {icon: <Globe />, name: "Next.js", color: "text-cyan-600"}, {icon: <Code2 />, name: "React", color: "text-indigo-600"} ].map((item, idx) => (
-                <div key={idx} className="flex items-center gap-2 rounded-xl bg-white/60 p-3 text-xs font-bold text-neutral-800 shadow-sm dark:bg-black/40 dark:text-neutral-200">
-                  <span className={item.color}>{item.icon}</span> {item.name}
-                </div>
-              ))}
-            </div>
-            
-            <div className="mt-8 flex items-center justify-between border-t border-blue-300/50 pt-5 dark:border-neutral-800">
-              <a href="https://github.com/cudin-etn" target="_blank" className="flex items-center gap-2 text-xs font-bold text-blue-900/70 transition-colors hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-white">
-                 <Github className="h-4 w-4" /> GitHub
-              </a>
-              <a href="https://buymeacoffee.com/tdevstudio" target="_blank" className="flex items-center gap-2 text-xs font-bold text-blue-900/70 transition-colors hover:text-indigo-700 dark:text-neutral-400 dark:hover:text-indigo-400">
-                 <Coffee className="h-4 w-4" /> Donate
-              </a>
-            </div>
-          </div>
-        </motion.div>
-      </div>
-
-      {/* ================= HÀNG 2: LƯỚI SẢN PHẨM ================= */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.2 }}
-        className="rounded-3xl bg-gradient-to-br from-violet-400 via-fuchsia-400 to-rose-400 p-[1px] shadow-xl dark:from-violet-500/40 dark:via-fuchsia-500/40 dark:to-rose-500/40"
-      >
-        <div className="h-full w-full rounded-[calc(1.5rem-1px)] bg-fuchsia-200 p-8 dark:bg-neutral-900/60 md:p-10">
-          <h3 className="mb-8 text-sm font-bold uppercase tracking-widest text-fuchsia-950 dark:text-fuchsia-200">{tProducts("title")}</h3>
-          
-          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            {productList.map((product) => (
-              <Link
-                key={product.key}
-                href={`/${locale}/products/${product.slug}`}
-                className="group/card relative flex min-h-[240px] flex-col justify-between rounded-3xl bg-gradient-to-br from-fuchsia-300 to-rose-300 p-[1px] transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl"
+        <div className="relative min-h-[430px] hero-enter hero-enter-delay sm:min-h-[560px]">
+          <div className="absolute inset-3 rounded-[48px] bg-[#ded7c9]" />
+          <div className="absolute inset-x-[11%] inset-y-0 rotate-3 rounded-[44px] bg-[#b5c1b1]" />
+          <div className="absolute inset-x-[5%] inset-y-[6%] -rotate-2 overflow-hidden rounded-[40px] border border-white/70 bg-[#f0ece3] shadow-[0_40px_120px_rgba(56,47,36,0.18)]">
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_15%,rgba(255,255,255,0.95),transparent_38%)]" />
+            <div className="absolute -right-20 top-16 h-72 w-72 rounded-full bg-[#d7b98e]/60 blur-3xl" />
+            <div className="absolute left-7 top-7 rounded-full border border-stone-300/70 bg-white/70 px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.18em] text-stone-600 backdrop-blur">Software collection</div>
+            {products.slice(0, 3).map((product, index) => (
+              <div
+                key={product.slug}
+                className={`absolute flex items-center gap-3 rounded-[22px] border border-white/80 bg-white/85 p-3 shadow-[0_18px_55px_rgba(41,37,36,0.14)] backdrop-blur-md transition duration-300 hover:-translate-y-2 hover:scale-[1.04] ${index === 0 ? "left-[8%] top-[22%]" : index === 1 ? "right-[7%] top-[46%]" : "bottom-[10%] left-[18%]"}`}
               >
-                <div className="relative flex h-full w-full flex-col rounded-[calc(1.5rem-1px)] bg-fuchsia-50/90 p-6 dark:bg-fuchsia-950/40">
-                  <div className="relative z-10">
-                    <h4 className="text-xl font-bold text-fuchsia-950 dark:text-fuchsia-50">{product.name}</h4>
-                    <p className="mt-2 line-clamp-3 text-xs leading-relaxed text-fuchsia-900/70 dark:text-fuchsia-200/70">{product.tagline[locale]}</p>
-                  </div>
-                  
-                  <div className="mt-auto flex justify-end">
-                    <div className="relative h-20 w-20 drop-shadow-2xl transition-transform duration-500 group-hover/card:-rotate-6 group-hover/card:scale-125">
-                      <Image src={product.image} alt={product.name} fill className="object-contain" />
-                    </div>
-                  </div>
+                <div className="relative h-20 w-20 overflow-hidden rounded-[19px] bg-stone-100">
+                  <Image src={product.assets.logo} alt="" fill sizes="80px" className="object-contain p-2.5" />
                 </div>
-              </Link>
+                <div className="min-w-0 pr-3">
+                  <p className="max-w-36 truncate text-sm font-bold text-stone-950">{product.name}</p>
+                  <p className="mt-1 text-xs text-stone-500">{product.category}</p>
+                </div>
+              </div>
             ))}
           </div>
         </div>
-      </motion.div>
+      </section>
 
+      <section id="products" className="scroll-mt-24 px-5 py-24 md:px-10 lg:px-14">
+        <div className="mx-auto max-w-[1320px]">
+          <Reveal className="max-w-3xl">
+            <p className="text-xs font-bold uppercase tracking-[0.22em] text-amber-800">01 · Selected work</p>
+            <h2 className="mt-5 text-4xl font-medium tracking-[-0.04em] text-stone-950 md:text-6xl">{t.work}</h2>
+            <p className="mt-5 max-w-2xl text-base leading-7 text-stone-600 md:text-lg">{t.workLead}</p>
+          </Reveal>
+
+          <div className="mt-16 space-y-24 md:space-y-32">
+            {featured.map((product, index) => (
+              <ProductStory key={product.slug} product={product} locale={locale} labels={t} reverse={index % 2 === 1} delay={index * 90} />
+            ))}
+          </div>
+
+          {remaining.length > 0 && (
+            <div className="mt-28 border-t border-stone-300 pt-12">
+              <div className="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
+                <div>
+                  <h2 className="text-3xl font-semibold tracking-[-0.04em] text-stone-950">{t.more}</h2>
+                  <p className="mt-2 text-sm text-stone-600">{t.moreLead}</p>
+                </div>
+              </div>
+              <div className="mt-8 grid gap-4 md:grid-cols-2">
+                {remaining.slice(0, 4).map((product) => (
+                  <CompactProduct key={product.slug} product={product} locale={locale} labels={t} />
+                ))}
+              </div>
+              {remaining.length > 0 && (
+                <Link href={`/${locale}/products`} className="group mt-7 inline-flex items-center gap-2 rounded-full border border-stone-300 bg-white/70 px-5 py-3 text-sm font-semibold text-stone-700 transition hover:-translate-y-0.5 hover:border-[#665745]">
+                  {t.catalog}<ArrowRight className="h-4 w-4 transition group-hover:translate-x-1" />
+                </Link>
+              )}
+            </div>
+          )}
+        </div>
+      </section>
     </div>
   );
+}
+
+function ProductStory({ product, locale, labels, reverse, delay }: { product: LocalizedProduct; locale: Locale; labels: (typeof copy)[Locale]; reverse: boolean; delay: number }) {
+  const asset = getPrimaryAsset(product);
+  return (
+    <Reveal delay={delay}>
+      <article className="grid items-center gap-8 lg:grid-cols-2 lg:gap-16">
+          <Link href={`/${locale}/work/${product.slug}`} className={`group relative aspect-[4/3] overflow-hidden rounded-[36px] border border-stone-200 bg-[#e9e4da] shadow-[0_30px_90px_rgba(56,47,36,0.12)] focus:outline-none focus:ring-2 focus:ring-amber-700 focus:ring-offset-4 ${reverse ? "lg:order-2" : ""}`}>
+        <div className="absolute inset-0 opacity-70" style={{ background: `radial-gradient(circle at 74% 20%, ${product.accentColor}26, transparent 38%)` }} />
+        <div className="absolute inset-[9%] overflow-hidden rounded-[28px] border border-white/80 bg-white/72 shadow-[0_24px_70px_rgba(41,37,36,0.12)] transition duration-700 ease-out group-hover:scale-[1.025] group-hover:-rotate-1">
+          <Image src={product.assets.hero || product.assets.logo} alt={`${product.name} product preview`} fill sizes="(max-width: 1024px) 100vw, 620px" className="object-contain p-[10%] transition duration-700 group-hover:scale-[1.035]" />
+        </div>
+        <span className="absolute bottom-5 right-5 flex h-12 w-12 items-center justify-center rounded-full bg-[#665745] text-white transition duration-300 group-hover:-translate-y-1 group-hover:translate-x-1">
+          <ArrowUpRight className="h-5 w-5" />
+        </span>
+      </Link>
+
+      <div className={reverse ? "lg:pr-10" : "lg:pl-2"}>
+        <div className="flex flex-wrap items-center gap-2">
+          <span className="text-xs font-bold uppercase tracking-[0.18em] text-amber-800">{product.category}</span>
+          {product.platforms.map((platform) => <span key={platform} className="rounded-full bg-stone-200/70 px-2.5 py-1 text-[11px] font-semibold text-stone-700">{PLATFORM_META[platform].label}</span>)}
+        </div>
+        <h3 className="mt-5 text-4xl font-medium tracking-[-0.04em] text-stone-950 md:text-5xl">{product.name}</h3>
+        <p className="mt-4 text-xl leading-8 text-stone-700">{product.tagline}</p>
+        <p className="mt-5 line-clamp-4 max-w-xl text-sm leading-7 text-stone-600 md:text-base">{product.description}</p>
+        <div className="mt-7 flex flex-wrap items-center gap-3">
+          <Link href={`/${locale}/work/${product.slug}`} className="group inline-flex items-center gap-2 rounded-full bg-[#665745] px-5 py-3 text-sm font-semibold text-white transition hover:-translate-y-0.5 hover:bg-[#8a6f4d]">
+            {labels.detail} <ArrowRight className="h-4 w-4 transition group-hover:translate-x-1" />
+          </Link>
+          {asset ? <DownloadLink asset={asset} label={labels.download} /> : product.links.download ? <a href={product.links.download} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 rounded-full border border-stone-300 bg-white px-5 py-3 text-sm font-semibold"><Download className="h-4 w-4" />{labels.download}</a> : <span className="rounded-full border border-stone-300 px-4 py-2.5 text-xs font-semibold text-stone-500">{labels.soon}</span>}
+        </div>
+      </div>
+      </article>
+    </Reveal>
+  );
+}
+
+function CompactProduct({ product, locale, labels }: { product: LocalizedProduct; locale: Locale; labels: (typeof copy)[Locale] }) {
+  return (
+    <Link href={`/${locale}/products/${product.slug}`} className="group flex items-center gap-4 rounded-[24px] border border-stone-200 bg-white p-4 transition duration-300 hover:-translate-y-1 hover:border-stone-400 hover:shadow-[0_20px_55px_rgba(56,47,36,0.08)]">
+      <div className="relative h-20 w-20 shrink-0 overflow-hidden rounded-[18px] bg-stone-100">
+        <Image src={product.assets.logo} alt="" fill sizes="80px" className="object-contain p-3" />
+      </div>
+      <div className="min-w-0 flex-1">
+        <p className="truncate text-lg font-semibold text-stone-950">{product.name}</p>
+        <p className="mt-1 line-clamp-1 text-sm text-stone-600">{product.tagline}</p>
+      </div>
+      <ArrowUpRight className="h-5 w-5 shrink-0 text-stone-500 transition group-hover:-translate-y-1 group-hover:translate-x-1" />
+      <span className="sr-only">{labels.catalogDetail}</span>
+    </Link>
+  );
+}
+
+function DownloadLink({ asset, label }: { asset: ReleaseAsset; label: string }) {
+  return (
+    <a href={`/api/download/${asset.id}`} className="inline-flex items-center gap-2 rounded-full border border-stone-300 bg-white px-5 py-3 text-sm font-semibold text-stone-800 transition hover:-translate-y-0.5 hover:border-[#665745]">
+      <Download className="h-4 w-4" /> {label}
+    </a>
+  );
+}
+
+function getPrimaryAsset(product: LocalizedProduct) {
+  return product.releases?.find((release) => release.status === "published")?.assets.find((asset) => asset.isActive);
 }

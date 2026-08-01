@@ -2,25 +2,32 @@
   "header": {
     "slogan": "Software, Done Right — For Every Platform"
   },
+  "nav": {
+    "home": "Overview",
+    "work": "Work",
+    "services": "Services",
+    "about": "About",
+    "contact": "Contact"
+  },
   "hero": {
-    "badge": "Available for Freelance",
+    "badge": "Available for Freelance Projects",
     "title1": "Software,",
     "title2": "Done Right.",
-    "description": "I am a Developer passionate about creating lean, high-performance tools and applications. Specializing in Website design, Desktop, and Mobile Apps.",
-    "hireMe": "Hire Me",
-    "cta": "Explore products",
+    "description": "I'm a Developer passionate about building polished, high-performance tools and apps. Specialized in Website, Tool, and Cross-Platform App development.",
+    "hireMe": "Get in Touch",
+    "cta": "Explore Work",
     "services": {
       "desktop": {
-        "title": "Desktop Apps",
-        "desc": "macOS, Windows, Linux Tools"
+        "title": "Desktop Applications",
+        "desc": "Tools for macOS, Windows, Linux"
       },
       "mobile": {
-        "title": "Mobile Apps",
-        "desc": "Native & Cross-platform Android"
+        "title": "Mobile Applications",
+        "desc": "Android Native & Cross-Platform"
       },
       "web": {
         "title": "Web Development",
-        "desc": "Modern, Fast, Responsive Sites"
+        "desc": "Modern, performant websites"
       }
     }
   },
@@ -28,60 +35,105 @@
     "title": "Expertise & Philosophy",
     "philosophy": {
       "title": "Development Philosophy",
-      "desc": "Every line of code matters. I don't just write software that works; I build systems that are optimized, stable, and aesthetically pleasing. Whether it's a macOS system tool or a demanding Android app, simplicity and user experience are always the guiding principles."
+      "desc": "Every line of code matters. I don't just write software that runs; I build systems that are optimized, stable, and aesthetically refined. Whether it's a macOS system tool or a demanding Android app, simplicity and user experience are always the guiding principles."
     },
     "edge": {
-      "title": "The Competitive Edge",
-      "desc": "Mastering System-level, Native Apps, and Web Frontend. Instead of using patchwork solutions, I focus on solid architecture, latency optimization, and strict adherence to the UI/UX standards of each OS (Apple Human Interface & Google Material)."
+      "title": "Competitive Edge",
+      "desc": "Mastering System-level, Native Apps, and Web Frontend. Instead of patchwork solutions, I focus on solid architecture, latency optimization, and strict adherence to each OS's UI/UX standards (Apple Human Interface & Google Material)."
     },
     "stack": {
-      "title": "Tech Stack",
-      "desc": "Utilizing modern and Native technologies to ensure maximum performance across platforms."
+      "title": "Tech Stack & Tools",
+      "desc": "Leveraging modern and Native technologies to ensure maximum performance across platforms."
     }
+  },
+  "services": {
+    "title": "Services",
+    "lead": "I help teams and startups turn ideas into shippable, maintainable products.",
+    "items": [
+      {
+        "icon": "mobile",
+        "title": "Mobile Development",
+        "desc": "Android (Kotlin/Compose) & iOS (Swift/SwiftUI). Native & Cross-platform (KMP, Flutter).",
+        "outcome": "Smooth apps, OS-design compliant, fast releases."
+      },
+      {
+        "icon": "desktop",
+        "title": "Desktop Development",
+        "desc": "macOS (SwiftUI/AppKit), Windows (WinUI/WPF), Linux (GTK/Qt). Tauri/Electron for cross-platform.",
+        "outcome": "System tools, productivity apps running native."
+      },
+      {
+        "icon": "layers",
+        "title": "Cross-Platform Architecture",
+        "desc": "Kotlin Multiplatform, Flutter, React Native, Tauri. Shared business logic, native UI per platform.",
+        "outcome": "One logic codebase, multiple platform UIs."
+      },
+      {
+        "icon": "cpu",
+        "title": "Architecture & Performance",
+        "desc": "Clean architecture, offline-first, startup optimization, memory profiling, CI/CD setup.",
+        "outcome": "Sustainable systems, scalable, high performance."
+      },
+      {
+        "icon": "code",
+        "title": "Code Review & Mentoring",
+        "desc": "PR audits, CI/CD pipelines, team velocity improvement, best practices coaching.",
+        "outcome": "Clean codebase, autonomous team, faster shipping."
+      },
+      {
+        "icon": "search",
+        "title": "Technical Advisory",
+        "desc": "Stack selection, feasibility studies, project rescue, due diligence.",
+        "outcome": "Right technical decisions, reduced risk, cost savings."
+      }
+    ]
+  },
+  "contactSection": {
+    "title": "Have a product that needs to be done right?",
+    "lead": "Share a few details about the problem, platforms, and timeline. I will come back with a clear, practical direction.",
+    "cta": "Talk about the project"
   },
   "products": {
     "title": "Products",
     "actions": {
-      "viewDetails": "View details",
+      "viewDetails": "View Details",
       "download": "Download",
       "github": "GitHub",
       "docs": "Documentation"
     },
     "cta": {
       "download": "Download",
-      "ready": "Ready to get started?",
-      "description": "Download and start using this product today. Built to be fast, reliable, and thoughtfully designed.",
-      "platforms": "Available for multiple platforms",
-      "support": "Support this project",
-      "supportHint": "If you find this product useful, you can support its development to help keep it free and well-maintained."
+      "ready": "Ready to Start?",
+      "description": "Download and start using the product today. Built to be fast, stable, and thoughtfully designed.",
+      "platforms": "Multi-Platform Support",
+      "support": "Support Project",
+      "supportHint": "If the product is useful, you can support T-Dev Studio to continue maintaining and developing."
     }
   },
   "donate": {
     "title": "Support T-Dev Studio",
-    "description": "If T-Dev Studio tools are helpful to you, consider supporting the studio so it can continue building free, well-crafted software.",
+    "description": "If T-Dev Studio's products help you, you can support the studio to continue maintaining and developing free, polished, and thoughtful tools.",
     "cta": {
-      "coffee": "Buy me a coffee",
-      "paypal": "Donate via PayPal"
+      "coffee": "Buy Me a Coffee",
+      "paypal": "Support via PayPal"
     },
     "links": {
-      "coffee": "https://buymeacoffee.com/tdevstudio",
+      "coffee": "https://www.buymeacoffee.com/tdevstudio",
       "paypal": "https://paypal.me/tdevstudio"
     },
     "bank": {
       "name": "Bank: Agribank",
-      "account": "Account: 7901 88888 1988 – Hà Quang Tùng",
+      "account": "Account: 7901 88888 1988 – Ha Quang Tung",
       "note": "Note: Donate T-Dev Studio"
     }
   },
-  "nav": {
-    "home": "Overview",
-    "about": "Skills",
-    "contact": "Contact"
-  },
   "footer": {
-    "support": "Support the studio",
+    "ctaTitle": "Have a technical challenge to solve?",
+    "navigate": "Navigate",
+    "connect": "Connect",
     "privacy": "Privacy Policy",
     "terms": "Terms of Service",
+    "support": "Support Studio",
     "copyright": "© {year} T-Dev Studio. All rights reserved."
   }
 }

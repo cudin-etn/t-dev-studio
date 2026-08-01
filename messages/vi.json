@@ -2,13 +2,20 @@
   "header": {
     "slogan": "Software, Done Right — For Every Platform"
   },
- "hero": {
+  "nav": {
+    "home": "Tổng quan",
+    "work": "Dự án",
+    "services": "Dịch vụ",
+    "about": "Giới thiệu",
+    "contact": "Liên hệ"
+  },
+  "hero": {
     "badge": "Sẵn sàng nhận dự án (Freelance)",
     "title1": "Software,",
     "title2": "Done Right.",
     "description": "Tôi là một Developer đam mê tạo ra các công cụ và ứng dụng tinh gọn, hiệu năng cao. Chuyên thiết kế Website, build Tool và App đa nền tảng.",
     "hireMe": "Liên hệ ngay",
-    "cta": "Khám phá sản phẩm",
+    "cta": "Khám phá dự án",
     "services": {
       "desktop": {
         "title": "Ứng dụng Desktop",
@@ -38,6 +45,53 @@
       "title": "Công nghệ & Công cụ",
       "desc": "Sử dụng các công nghệ hiện đại và Native để đảm bảo hiệu năng tối đa trên từng nền tảng."
     }
+  },
+  "services": {
+    "title": "Dịch vụ",
+    "lead": "Tôi giúp các team và startup biến ý tưởng thành sản phẩm chạy được, dễ bảo trì.",
+    "items": [
+      {
+        "icon": "mobile",
+        "title": "Mobile Development",
+        "desc": "Android (Kotlin/Compose) & iOS (Swift/SwiftUI). Native & Cross-platform (KMP, Flutter).",
+        "outcome": "Ứng dụng mượt, tuân thủ thiết kế OS, release nhanh."
+      },
+      {
+        "icon": "desktop",
+        "title": "Desktop Development",
+        "desc": "macOS (SwiftUI/AppKit), Windows (WinUI/WPF), Linux (GTK/Qt). Tauri/Electron cho cross-platform.",
+        "outcome": "Tool hệ thống, app productivity chạy native."
+      },
+      {
+        "icon": "layers",
+        "title": "Cross-Platform Architecture",
+        "desc": "Kotlin Multiplatform, Flutter, React Native, Tauri. Shared business logic, native UI per platform.",
+        "outcome": "Một codebase logic, nhiều platform UI."
+      },
+      {
+        "icon": "cpu",
+        "title": "Architecture & Performance",
+        "desc": "Clean architecture, offline-first, startup optimization, memory profiling, CI/CD setup.",
+        "outcome": "Hệ thống bền vững, dễ mở rộng, hiệu năng cao."
+      },
+      {
+        "icon": "code",
+        "title": "Code Review & Mentoring",
+        "desc": "PR audits, CI/CD pipeline, team velocity improvement, best practices coaching.",
+        "outcome": "Codebase sạch, team tự chủ, ship nhanh hơn."
+      },
+      {
+        "icon": "search",
+        "title": "Technical Advisory",
+        "desc": "Stack selection, feasibility studies, project rescue, due diligence.",
+        "outcome": "Quyết định kỹ thuật đúng, giảm rủi ro, tiết kiệm chi phí."
+      }
+    ]
+  },
+  "contactSection": {
+    "title": "Có một sản phẩm cần làm cho đúng?",
+    "lead": "Gửi mình vài dòng về bài toán, nền tảng và thời điểm dự kiến. Mình sẽ phản hồi với hướng tiếp cận rõ ràng và thực tế.",
+    "cta": "Trao đổi về dự án"
   },
   "products": {
     "title": "Sản phẩm",
@@ -69,19 +123,17 @@
     },
     "bank": {
       "name": "Ngân hàng: Agribank",
-      "account": "STK: 7901 88888 1988 – Hà Quang Tùng",
+      "account": "Số tài khoản: 7901 88888 1988 – Hà Quang Tùng",
       "note": "Nội dung: Donate T-Dev Studio"
     }
   },
- "nav": {
-    "home": "Tổng quan",
-    "about": "Kỹ năng",
-    "contact": "Liên hệ"
-  },
   "footer": {
-    "support": "Ủng hộ dự án",
-    "privacy": "Chính sách quyền riêng tư",
-    "terms": "Điều khoản sử dụng",
+    "ctaTitle": "Có một bài toán kỹ thuật cần giải quyết?",
+    "navigate": "Điều hướng",
+    "connect": "Kết nối",
+    "privacy": "Chính sách bảo mật",
+    "terms": "Điều khoản dịch vụ",
+    "support": "Ủng hộ studio",
     "copyright": "© {year} T-Dev Studio. All rights reserved."
   }
 }

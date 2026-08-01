@@ -1,22 +1,36 @@
 import { MetadataRoute } from "next";
-import { PRODUCTS } from "@/lib/products";
+import { getPublishedProducts } from "@/lib/products";
+import { getSiteUrl, LOCALES } from "@/lib/site";
 
-export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = "https://tdev.site";
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  const baseUrl = getSiteUrl();
+  const products = await getPublishedProducts("vi");
 
-  const locales = ["vi", "en"];
-
-  const staticPages = locales.map((locale) => ({
+  const staticPages = LOCALES.map((locale) => ({
     url: `${baseUrl}/${locale}`,
-    lastModified: new Date(),
+    alternates: {
+      languages: Object.fromEntries(LOCALES.map((language) => [language, `${baseUrl}/${language}`])),
+    },
   }));
 
-  const productPages = Object.values(PRODUCTS).flatMap((product) =>
-    locales.map((locale) => ({
+  const productPages = products.flatMap((product) =>
+    LOCALES.map((locale) => ({
       url: `${baseUrl}/${locale}/products/${product.slug}`,
-      lastModified: new Date(),
+      lastModified: product.updatedAt || product.publishedAt
+        ? new Date(product.updatedAt ?? product.publishedAt ?? "")
+        : undefined,
+      alternates: {
+        languages: Object.fromEntries(
+          LOCALES.map((language) => [language, `${baseUrl}/${language}/products/${product.slug}`]),
+        ),
+      },
     }))
   );
 
-  return [...staticPages, ...productPages];
+  return [
+    ...staticPages,
+    ...productPages,
+    { url: `${baseUrl}/privacy` },
+    { url: `${baseUrl}/terms` },
+  ];
 }

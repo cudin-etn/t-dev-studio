@@ -1,19 +1,24 @@
 import type { Metadata } from "next";
-import ThemeProvider from "@/components/ThemeProvider";
+import { getSiteUrl, SITE_NAME } from "@/lib/site";
+import "./globals.css";
+
+const siteUrl = getSiteUrl();
 
 export const metadata: Metadata = {
+  metadataBase: new URL(siteUrl),
   title: "T-Dev Studio — Software, Done Right",
   description:
     "T-Dev Studio builds cross-platform tools and apps for Android, macOS, Windows, and Linux. Clean UI, solid engineering, software done right.",
+  applicationName: SITE_NAME,
   openGraph: {
     title: "T-Dev Studio — Software, Done Right",
     description:
       "Cross-platform tools and apps for Android, macOS, Windows, and Linux.",
-    url: "https://tdevstudio.dev",
-    siteName: "T-Dev Studio",
+    url: siteUrl,
+    siteName: SITE_NAME,
     images: [
       {
-        url: "/og.png",
+        url: "/og-banner.jpg",
         width: 1200,
         height: 630,
         alt: "T-Dev Studio",
@@ -27,23 +32,28 @@ export const metadata: Metadata = {
     title: "T-Dev Studio — Software, Done Right",
     description:
       "Cross-platform tools and apps for Android, macOS, Windows, and Linux.",
-    images: ["/og.png"],
+    images: ["/og-banner.jpg"],
   },
   icons: {
-    icon: "/favicon.ico",
-    apple: "/apple-touch-icon.png",
+    icon: "/favicon.png",
+    shortcut: "/favicon.png",
+    apple: "/favicon.png",
+  },
+  robots: {
+    index: true,
+    follow: true,
   },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
   return (
-    <html lang="vi" suppressHydrationWarning>
+    <html lang="vi">
       <body className="antialiased">
-        <ThemeProvider>{children}</ThemeProvider>
+        {children}
       </body>
     </html>
   );

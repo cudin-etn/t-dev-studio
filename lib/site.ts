@@ -13,7 +13,7 @@ export const CONTACT_EMAIL = "tungninh88@gmail.com";
 export const GITHUB_URL = "https://github.com/cudin-etn";
 
 export function getSiteUrl() {
-  const raw = process.env.NEXT_PUBLIC_SITE_URL || "https://t-dev.studio";
+  const raw = process.env.NEXT_PUBLIC_SITE_URL || "https://tdev.site";
   return raw.replace(/\/$/, "");
 }
 

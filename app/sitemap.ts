@@ -27,9 +27,27 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     }))
   );
 
+  const workProducts = products.filter((product) => product.caseStudyChallenge && !/coming soon|đang cập nhật/i.test(product.caseStudyChallenge));
+  const workPages = workProducts.flatMap((product) =>
+    LOCALES.map((locale) => ({
+      url: `${baseUrl}/${locale}/work/${product.slug}`,
+      lastModified: product.updatedAt || product.publishedAt
+        ? new Date(product.updatedAt ?? product.publishedAt ?? "")
+        : undefined,
+      alternates: {
+        languages: Object.fromEntries(
+          LOCALES.map((language) => [language, `${baseUrl}/${language}/work/${product.slug}`]),
+        ),
+      },
+    }))
+  );
+
   return [
     ...staticPages,
     ...productPages,
+    { url: `${baseUrl}/vi/work`, alternates: { languages: { vi: `${baseUrl}/vi/work`, en: `${baseUrl}/en/work` } } },
+    { url: `${baseUrl}/en/work`, alternates: { languages: { vi: `${baseUrl}/vi/work`, en: `${baseUrl}/en/work` } } },
+    ...workPages,
     { url: `${baseUrl}/privacy` },
     { url: `${baseUrl}/terms` },
   ];

@@ -1,6 +1,14 @@
 'use client';
 import { useEffect, useRef } from 'react';
 
+type TelegramUser = Record<string, string | number | boolean>;
+
+declare global {
+    interface Window {
+        onTelegramAuth?: (user: TelegramUser) => void;
+    }
+}
+
 export default function TelegramAuthPage() {
     const containerRef = useRef<HTMLDivElement>(null);
 
@@ -10,8 +18,10 @@ export default function TelegramAuthPage() {
         if (containerRef.current.innerHTML.trim() !== '') return;
 
         // Bắt sự kiện đăng nhập thành công để ném về Tool Go
-        (window as any).onTelegramAuth = function(user: any) {
-            const params = new URLSearchParams(user).toString();
+        window.onTelegramAuth = function(user: TelegramUser) {
+            const params = new URLSearchParams(
+                Object.entries(user).map(([key, value]) => [key, String(value)]),
+            ).toString();
             window.location.href = "http://127.0.0.1:8123/callback?" + params;
         };
 
